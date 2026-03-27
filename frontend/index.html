@@ -1,1 +1,46 @@
-<h1>Smart Agri AI</h1>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Smart Agri AI</title>
+</head>
+<body>
+
+<h1>🌱 Smart Agriculture AI</h1>
+
+<h2>Soil Detection</h2>
+<input type="file" id="file">
+<button onclick="upload()">Predict Soil</button>
+
+<h2>Crop Recommendation</h2>
+<button onclick="crop()">Get Crops</button>
+
+<script>
+
+const API = "http://127.0.0.1:8000";
+
+function upload(){
+    let file = document.getElementById("file").files[0];
+
+    let formData = new FormData();
+    formData.append("file", file);
+
+    fetch(API + "/predict-soil", {
+        method: "POST",
+        body: formData
+    })
+    .then(res => res.json())
+    .then(data => alert("Soil: " + data.soil_type));
+}
+
+function crop(){
+    fetch(API + "/recommend-crop", {
+        method: "POST"
+    })
+    .then(res => res.json())
+    .then(data => alert(data.recommended_crops));
+}
+
+</script>
+
+</body>
+</html>
