@@ -5,7 +5,7 @@ import tensorflow as tf
 
 app = FastAPI()
 
-# Dummy Soil Model
+# Dummy model
 model = tf.keras.Sequential([
     tf.keras.layers.Flatten(input_shape=(128,128,3)),
     tf.keras.layers.Dense(64, activation='relu'),
@@ -18,7 +18,6 @@ soil_types = ["Sandy", "Clay", "Loamy", "Black", "Red"]
 def home():
     return {"message": "Smart Agri AI Running 🚀"}
 
-
 @app.post("/predict-soil")
 async def predict_soil(file: UploadFile = File(...)):
     image = Image.open(file.file).resize((128,128))
@@ -30,13 +29,8 @@ async def predict_soil(file: UploadFile = File(...)):
 
     return {"soil_type": soil}
 
-
 @app.post("/recommend-crop")
 def recommend_crop():
     return {
-        "recommended_crops": [
-            "Rice 🌾",
-            "Wheat 🌱",
-            "Maize 🌽"
-        ]
+        "recommended_crops": ["Rice 🌾", "Wheat 🌱", "Maize 🌽"]
     }
